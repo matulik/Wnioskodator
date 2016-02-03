@@ -17,8 +17,13 @@ from django.conf.urls import include, url
 #from django.contrib import admin
 
 from User import views as user_views
+from Application import views as application_view
 
 urlpatterns = [
+    ### API URLS ###
+    url(r'^api/applications_list/$', application_view.applications_list),
+    url(r'^api/application_detail/(?P<pk>[0-9]+)/$', application_view.application_detail),
+
     url(r'^$', user_views.login),
     url(r'^login/$', user_views.login)
 ]

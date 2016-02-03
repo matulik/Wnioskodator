@@ -4,7 +4,7 @@ from django.db import models
 from hashlib import sha1
 
 # Session expiry time (in [ms])
-SESSION_EXPIRED_TIME = 300
+SESSION_EXPIRED_TIME = 30000
 
 class User(models.Model):
     username = models.CharField(max_length=50, blank=False, verbose_name=u'Login')
@@ -21,7 +21,6 @@ class User(models.Model):
         return sha1(password.encode('utf8')).hexdigest()
 
     def checkPassword(self, password):
-        print password
         if self.hashPassword(password) == self.password:
             return True
         else:
@@ -44,7 +43,7 @@ class Login():
         if user and user.checkPassword(password):
             request.session['login'] = True
             request.session['id'] = user.id
-            #request.session.set_expiry(SESSION_EXPIRED_TIME)
+            request.session.set_expiry(SESSION_EXPIRED_TIME)
             print u'Login successfully'
             return True
         else:
