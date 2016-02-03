@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Wnioskodator - Login</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+<h1>Wnioskodator</h1>
+
+<form action="/login/" method="post">
+    {% csrf_token %}
+    <input name="username" id="username" type="text" placeholder="Login">
+    <br>
+    <input name="password" id="password" type="password" placeholder="Hasło">
+    <br>
+    <input type="submit" value="Login">
+</form>
+
+{{ msg }}
+
+</body>
+</html>
