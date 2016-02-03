@@ -1,7 +1,6 @@
 #coding=UTF-8
 
 from django.shortcuts import redirect, render_to_response, RequestContext
-from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.response import Response
 from rest_framework import status
@@ -12,7 +11,6 @@ from Application.models import Application
 from Application.serializers import ApplicationSerializer
 
 ### API VIEWS ###
-@csrf_exempt
 @api_view(['GET','POST'])
 def applications_list(request):
     if not Login.auth(request):
@@ -34,7 +32,6 @@ def applications_list(request):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET','PUT','DELETE'])
-@csrf_exempt
 def application_detail(request, pk):
     if not Login.auth(request):
         msg = u'Musisz być zalogowany by korzystać z usługi. Zaloguj się i spróbuj ponownie'

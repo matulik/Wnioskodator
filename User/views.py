@@ -1,11 +1,9 @@
 #coding=UTF-8
 
 from django.shortcuts import redirect, render_to_response, RequestContext
-from django.views.decorators.csrf import csrf_exempt
 
 from User.models import *
 
-@csrf_exempt
 def login(request):
     if Login.auth(request):
         return redirect('/home/')
@@ -30,3 +28,7 @@ def login(request):
             return render_to_response('User/login.html', context_instance=RequestContext(request))
 
 
+def logout(request):
+    if Login.auth(request):
+        Login.logout(request)
+    return render_to_response('User/login.html', context_instance=RequestContext(request))

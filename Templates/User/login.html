@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/pure-min.css' %}">
+
     <meta charset="UTF-8">
     <title>Wnioskodator - Login</title>
     <style>
         body {
-            background-color: black;
-            color: white;
             text-align: center;
             margin-top: 50px;
         }
@@ -15,16 +16,19 @@
 <body>
 <h1>Wnioskodator</h1>
 
-<form action="/login/" method="post">
+<form action="/login/" class="pure-form" method="post">
     {% csrf_token %}
     <input name="username" id="username" type="text" placeholder="Login">
-    <br>
+    <br><br>
     <input name="password" id="password" type="password" placeholder="Hasło">
-    <br>
-    <input type="submit" value="Login">
+    <br><br>
+    <input type="submit" class="pure-button" value="Login">
 </form>
+<br>
 
-{{ msg }}
+<div>
+    {{ msg }}
+</div>
 
 </body>
 </html>

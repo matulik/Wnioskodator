@@ -18,12 +18,21 @@ from django.conf.urls import include, url
 
 from User import views as user_views
 from Application import views as application_view
+from Home import views as home_views
 
 urlpatterns = [
     ### API URLS ###
     url(r'^api/applications_list/$', application_view.applications_list),
     url(r'^api/application_detail/(?P<pk>[0-9]+)/$', application_view.application_detail),
 
+    ### USER URLS ###
     url(r'^$', user_views.login),
-    url(r'^login/$', user_views.login)
+    url(r'^login/$', user_views.login),
+    url(r'^logout/$', user_views.logout),
+
+    ### HOME URLS ###
+    url(r'^home/$', home_views.home)
+
+
+
 ]
