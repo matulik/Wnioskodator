@@ -32,3 +32,4 @@ def logout(request):
     if Login.auth(request):
         Login.logout(request)
     return render_to_response('User/login.html', context_instance=RequestContext(request))
+

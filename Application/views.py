@@ -5,17 +5,30 @@ from django.shortcuts import redirect, render_to_response, RequestContext
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
+from rest_framework.authtoken.models import Token
 
-from User.models import Login
+from User.models import User, Login
 from Application.models import Application
 from Application.serializers import ApplicationSerializer
+
+
+### AUTH ###
+@api_view(['POST'])
+def getAuthToken(request):
+    if Login.login(request) and request.method == 'POST':
+        data = {}
+        user = User.objects.get(id=request.session['id'])
+        data['TOKEN'] = user.token
+        return Response(data=data, status=status.HTTP_200_OK)
+    else:
+        return Response(data=None, status=status.HTTP_401_UNAUTHORIZED)
+
 
 ### API VIEWS ###
 @api_view(['GET','POST'])
 def applications_list(request):
-    if not Login.auth(request):
-        msg = u'Musisz być zalogowany by korzystać z usługi. Zaloguj się i spróbuj ponownie'
-        return render_to_response('User/login.html', { 'msg': msg }, context_instance=RequestContext(request))
+    if not Login.tokenAuth(request):
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
     else:
         if request.method == 'GET':
             aps = Application.objects.all()
@@ -33,9 +46,8 @@ def applications_list(request):
 
 @api_view(['GET','PUT','DELETE'])
 def application_detail(request, pk):
-    if not Login.auth(request):
-        msg = u'Musisz być zalogowany by korzystać z usługi. Zaloguj się i spróbuj ponownie'
-        return render_to_response('User/login.html', { 'msg': msg }, context_instance=RequestContext(request))
+    if not Login.tokenAuth(request):
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
     else:
         # If exists
         try:

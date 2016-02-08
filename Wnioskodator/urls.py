@@ -21,6 +21,9 @@ from Application import views as application_view
 from Home import views as home_views
 
 urlpatterns = [
+    ### AUTH - TOKEN ###
+    url(r'^api/auth/$', application_view.getAuthToken),
+
     ### API URLS ###
     url(r'^api/applications_list/$', application_view.applications_list),
     url(r'^api/application_detail/(?P<pk>[0-9]+)/$', application_view.application_detail),

@@ -3,8 +3,11 @@
 from django.db import models
 from django.utils import timezone
 
+from User.models import User
+
 class Application(models.Model):
     dateAdded = models.DateTimeField(blank=False, default=timezone.now, verbose_name=u'Data dodania')
+    whoAdded = models.ForeignKey(User, blank=False, verbose_name=u'Dodane przez')
     dateLastEdited = models.DateTimeField(blank=True, default=timezone.now, verbose_name=u'Data ostatniej edycji')
     applicationNumber = models.CharField(max_length=50, blank=False, verbose_name=u'Numer wniosku')
     applicationOwner = models.CharField(max_length=50, blank=False, verbose_name=u'Nazwa wnioskodawcy')

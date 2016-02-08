@@ -5,6 +5,7 @@ from hashlib import sha1
 
 # Session expiry time (in [ms])
 SESSION_EXPIRED_TIME = 30000
+TOKEN_KEY = u"DUPA"
 
 class User(models.Model):
     username = models.CharField(max_length=50, blank=False, verbose_name=u'Login')
@@ -13,6 +14,7 @@ class User(models.Model):
     surname = models.CharField(max_length=50, verbose_name=u'Surename')
     email = models.EmailField()
     access_lvl = models.IntegerField(default=0, verbose_name=u'Access level')
+    token = models.CharField(max_length=40, blank=True)
 
     class Meta:
         db_table = 'USER'
@@ -28,6 +30,7 @@ class User(models.Model):
 
     def save(self, *args, **kwargs):
         self.password = self.hashPassword(self.password)
+        self.token = Login.generateToken(self)
         super(User, self).save(*args, **kwargs)
 
 class Login():
@@ -37,7 +40,7 @@ class Login():
         password = request.POST['password']
         try:
             user = User.objects.get(username=username)
-        except ObjectDoesNotExist:
+        except User.DoesNotExist:
             print u'Bad username or password'
             return False
         if user and user.checkPassword(password):
@@ -66,3 +69,35 @@ class Login():
         else:
             return False
 
+    @staticmethod
+    def getCurrentUserToken(user):
+        return user.token
+
+    @staticmethod
+    def generateToken(user):
+        token = user.username + str(user.id) + TOKEN_KEY
+        return sha1(token.encode('utf8')).hexdigest()
+
+    @staticmethod
+    def setToken(user):
+        user.token = Login.getToken()
+        user.save()
+
+    @staticmethod
+    def getUserByToken(token):
+        try:
+            user = User.objects.get(token=token)
+        except User.DoesNotExist:
+            return None
+
+        return user
+
+    @staticmethod
+    def tokenAuth(request):
+        token = request.META['HTTP_TOKEN']
+
+        if token:
+            user = Login.getUserByToken(token)
+            if user:
+                return True
+        return False
