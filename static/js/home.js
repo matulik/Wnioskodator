@@ -48,6 +48,7 @@ function table_refresh(data) {
 // Button handlings
 function setDeletionForm() {
     $("#deletions").click(function () {
+        removeHiglightFromChecked()
         $("#deletions").addClass("home-form-button-highlited");
         $("#deletions-form").show("slow");
 
@@ -61,6 +62,7 @@ function setDeletionForm() {
 
 function setEditionForm() {
     $("#edition").click(function () {
+        removeHiglightFromChecked()
         $("#deletions").removeClass("home-form-button-highlited");
         $("#deletions-form").hide("slow");
 
@@ -94,6 +96,8 @@ function hideForms() {
 }
 
 function trmouseclick(i) {
+    var deletion = $("#deletions-form").is(":visible")
+
     var creation = $("#creation-form").is(":visible")
     if (creation == true) {
         return
@@ -103,6 +107,9 @@ function trmouseclick(i) {
     if (edition == true) {
         removeHiglightFromChecked()
     }
+
+    if (deletion == false && creation == false && edition == false)
+        return;
 
     var row = $("tr").get(i.rowIndex);
     if (row.className == "mouseover")
