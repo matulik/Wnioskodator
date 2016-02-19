@@ -1,16 +1,117 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'css/pure-min.css' %}">
-
     <meta charset="UTF-8">
+
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.dynatable.css' %}">
+
+    <script type="application/javascript" src="{% static 'js/jquery-1.12.0.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.dynatable.js' %}"></script>
+
+
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <script type="application/javascript" src="{% static 'js/home.js' %}"></script>
+
+
     <title>Wnioskodator - Home</title>
-
 </head>
-<body>
+<body id="home-body">
 
-home
+<div id="home-container">
+    <div class="row">
+        <div class="col-xs-10 home-left">
+            <table id="home-dtable" class="table">
+                <thead id="home-table-headers">
+                <th data-dynatable-column="id" id="home-table-id">ID</th>
+                <th data-dynatable-column="applicationNumber">Numer wniosku</th>
+                <th data-dynatable-column="dateAdded">Data dodania</th>
+                <th data-dynatable-column="whoAdded">Dodane przez</th>
+                <th data-dynatable-column="dateLastEdited">Data ostatniej edycji</th>
+                <th data-dynatable-column="applicationOwner">Nazwa wnioskodawcy</th>
+                <th data-dynatable-column="applicationTitle">Tytuł projektu</th>
+                <th data-dynatable-column="firstViewBy">Pierwsze sprawdzenie</th>
+                <th data-dynatable-column="secondViewBy">Drugie sprawdzenie</th>
+                <th data-dynatable-column="firstStageOpinion">Wynik oceny</th>
+                <th data-dynatable-column="additionalDescription">Dodatkowe uwagi</th>
+                </thead>
+            </table>
+        </div>
 
+        <div class="col-xs-2 home-right">
+            <button id="deletions" class="btn btn-default home-form-button">Usuwanie</button>
+            <button id="edition" class="btn btn-default home-form-button">Edycja</button>
+            <button id="creation" class="btn btn-default home-form-button">Nowy</button>
+
+            <div id="actions-form">
+                <div id="deletions-form">
+                    <button id="button_delete" class="btn btn-default home-form-button" type="submit">Usuń zaznaczone
+                    </button>
+                </div>
+
+                <div id="edition-form">
+                    <form>
+                        <fieldset>
+                            <label for="editionApplicationNumber">Numer wniosku</label>
+                            <input id="editionApplicationNumber" name="applicationNumber" type="text"
+                                   placeholder="Numer wniosku">
+                            <label for="editionApplicationOwner">Nazwa wnioskodawcy</label>
+                            <input id="editionApplicationOwner" name="applicationOwner" type="text"
+                                   placeholder="Nazwa wnioskodawcy">
+                            <label for="editionApplicationTitle">Tytuł projektu</label>
+                            <input id="editionApplicationTitle" name="applicationTitle" type="text"
+                                   placeholder="Tytuł projektu">
+                            <label for="editionFirstViewBy">Pierwsze sprawdzenie</label>
+                            <input id="editionFirstViewBy" name="firstViewBy" type="text"
+                                   placeholder="Pierwsze sprawdzenie">
+                            <label for="editionSecondViewBy">Drugie sprawdzenie</label>
+                            <input id="editionSecondViewBy" name="secondViewBy" type="text"
+                                   placeholder="Drugie sprawdzenie">
+                            <label for="editionFirstStageOpinion">Wynik oceny</label>
+                            <input id="editionFirstStageOpinion" name="firstStageOpinion" type="text"
+                                   placeholder="Wynik oceny">
+                            <label for="editionAdditionalDescription">Dodatkowe uwagi</label>
+                            <input id="editionAdditionalDescription" name="additionalDescription" type="text"
+                                   placeholder="Dodatkowe uwagi">
+                            <br> <br>
+                            <input type="button" id="edition_button_create" class="btn btn-default home-form-button"
+                                   value="Zapisz">
+                        </fieldset>
+                    </form>
+                </div>
+
+                <div id="creation-form">
+                    <form>
+                        <fieldset>
+                            <label for="applicationNumber">Numer wniosku</label>
+                            <input id="applicationNumber" name="applicationNumber" type="text"
+                                   placeholder="Numer wniosku">
+                            <label for="applicationOwner">Nazwa wnioskodawcy</label>
+                            <input id="applicationOwner" name="applicationOwner" type="text"
+                                   placeholder="Nazwa wnioskodawcy">
+                            <label for="applicationTitle">Tytuł projektu</label>
+                            <input id="applicationTitle" name="applicationTitle" type="text"
+                                   placeholder="Tytuł projektu">
+                            <label for="firstViewBy">Pierwsze sprawdzenie</label>
+                            <input id="firstViewBy" name="firstViewBy" type="text" placeholder="Pierwsze sprawdzenie">
+                            <label for="secondViewBy">Drugie sprawdzenie</label>
+                            <input id="secondViewBy" name="secondViewBy" type="text" placeholder="Drugie sprawdzenie">
+                            <label for="firstStageOpinion">Wynik oceny</label>
+                            <input id="firstStageOpinion" name="firstStageOpinion" type="text"
+                                   placeholder="Wynik oceny">
+                            <label for="additionalDescription">Dodatkowe uwagi</label>
+                            <input id="additionalDescription" name="additionalDescription" type="text"
+                                   placeholder="Dodatkowe uwagi">
+                            <br> <br>
+                            <input type="button" id="button_create" class="btn btn-default home-form-button"
+                                   value="Zapisz">
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

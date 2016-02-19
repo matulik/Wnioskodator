@@ -1,4 +1,4 @@
-#coding=UTF-8
+# coding=UTF-8
 
 from django.db import models
 from hashlib import sha1
@@ -6,6 +6,7 @@ from hashlib import sha1
 # Session expiry time (in [ms])
 SESSION_EXPIRED_TIME = 30000
 TOKEN_KEY = u"DUPA"
+
 
 class User(models.Model):
     username = models.CharField(max_length=50, blank=False, verbose_name=u'Login')
@@ -32,6 +33,7 @@ class User(models.Model):
         self.password = self.hashPassword(self.password)
         self.token = Login.generateToken(self)
         super(User, self).save(*args, **kwargs)
+
 
 class Login():
     @staticmethod
@@ -84,17 +86,34 @@ class Login():
         user.save()
 
     @staticmethod
-    def getUserByToken(token):
+    def getCurrentUser(request):
+        # Try to get token
         try:
-            user = User.objects.get(token=token)
-        except User.DoesNotExist:
-            return None
+            token = request.META['HTTP_TOKEN']
+        except:
+            print "No token"
+            token = None
 
-        return user
+        if token:
+            try:
+                user = User.objects.get(token=token)
+                return user
+            except User.DoesNotExist:
+                return None
+        else:
+            try:
+                uid = request.session['id']
+                user = User.objects.get(id=uid)
+                return user
+            except User.DoesNotExist:
+                return None
 
     @staticmethod
     def tokenAuth(request):
-        token = request.META['HTTP_TOKEN']
+        try:
+            token = request.META['HTTP_TOKEN']
+        except:
+            return False
 
         if token:
             user = Login.getUserByToken(token)

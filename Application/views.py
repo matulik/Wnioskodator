@@ -27,7 +27,7 @@ def getAuthToken(request):
 ### API VIEWS ###
 @api_view(['GET','POST'])
 def applications_list(request):
-    if not Login.tokenAuth(request):
+    if not Login.tokenAuth(request) and not Login.auth(request):
         return Response(status=status.HTTP_401_UNAUTHORIZED)
     else:
         if request.method == 'GET':
@@ -46,7 +46,7 @@ def applications_list(request):
 
 @api_view(['GET','PUT','DELETE'])
 def application_detail(request, pk):
-    if not Login.tokenAuth(request):
+    if not Login.tokenAuth(request) and not Login.auth(request):
         return Response(status=status.HTTP_401_UNAUTHORIZED)
     else:
         # If exists

@@ -6,10 +6,13 @@ from rest_framework import serializers
 
 from django.utils import timezone
 
+from User.models import Login
+
 class ApplicationSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    dateAdded = serializers.DateTimeField(read_only=True)
-    dateLastEdited = serializers.DateTimeField(read_only=True)
+    dateAdded = serializers.DateTimeField(format="%d-%m-%Y %H:%M", read_only=True)
+    whoAdded = serializers.PrimaryKeyRelatedField(read_only=True)
+    dateLastEdited = serializers.DateTimeField(format="%d-%m-%Y %H%M", read_only=True)
     applicationNumber = serializers.CharField(max_length=50, required=True)
     applicationOwner = serializers.CharField(max_length=50, required=True)
     applicationTitle = serializers.CharField(max_length=50, required=True)
@@ -19,6 +22,9 @@ class ApplicationSerializer(serializers.Serializer):
     additionalDescription = serializers.CharField(max_length=150, required=True)
 
     def create(self, validated_data):
+        request = self.context['request']
+
+        validated_data['whoAdded'] = Login.getCurrentUser(request)
         return Application.objects.create(**validated_data)
 
     def update(self, instance, validated_data):

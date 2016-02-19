@@ -1,0 +1,96 @@
+#login-body {
+    background-color: cadetblue;
+}
+
+.login-form {
+    text-align: center;
+    width: 10%;
+    margin: 0 auto;
+}
+
+.login-header {
+    text-align: center;
+    font-weight: bold;
+}
+
+.login-msg {
+    text-align: center;
+    margin-top: 20px;
+    color: RED;
+    font-weight: bold;
+}
+
+/* HOME */
+
+#home-body {
+    background-color: cadetblue;
+}
+
+#home-container {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    width: 80%;
+}
+
+.home-left {
+    text-align: center;
+    background-color: cyan;
+    min-height: 200px;
+    min-width: 900px;
+    padding: 10px 10px 10px 10px;
+}
+
+.home-right {
+    text-align: center;
+    background-color: gray;
+    min-height: 200px;
+    padding: 10px 10px 10px 10px;
+}
+
+#home-table-headers  {
+    background-color: green;
+    font-size: 10px;
+    vertical-align: text-top;
+    font-weight: bold;
+}
+
+#home-table-id {
+    display: none;
+}
+
+#deletions {
+    width: 80%;
+}
+
+#edition {
+    width: 80%;
+}
+
+#creation {
+    width: 80%;
+}
+
+.home-form-button-highlited {
+    background-color: lightgray;
+    border-color: black;
+}
+
+#actions-form {
+    margin-top: 10px;
+    margin-right: 0;
+    margin-left: 0;
+    text-align: center;
+    display: inherit;
+}
+
+#actions-form button {
+    margin-top: 10px;
+    text-align: center;
+    width: 80%;
+
+}
+
+.mouseover {
+    background-color: gray;
+}

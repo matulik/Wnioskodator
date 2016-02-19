@@ -2,31 +2,33 @@
 <html lang="pl">
 <head>
     {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'css/pure-min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
 
     <meta charset="UTF-8">
     <title>Wnioskodator - Login</title>
-    <style>
-        body {
-            text-align: center;
-            margin-top: 50px;
-        }
-    </style>
 </head>
-<body>
-<h1>Wnioskodator</h1>
+<body id="login-body">
 
-<form action="/login/" class="pure-form" method="post">
-    {% csrf_token %}
-    <input name="username" id="username" type="text" placeholder="Login">
-    <br><br>
-    <input name="password" id="password" type="password" placeholder="Hasło">
-    <br><br>
-    <input type="submit" class="pure-button" value="Login">
-</form>
-<br>
+<h1 class="login-header">Wnioskodator</h1>
 
-<div>
+<div class="login-form">
+    <form action="/login/" class="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Login</label>
+            <input class="form-control" name="username" id="username" type="text" placeholder="Login">
+        </div>
+        <div class="form-group">
+            <label for="password">Hasło</label>
+            <input class="form-control" name="password" id="password" type="password" placeholder="Hasło">
+        </div>
+
+        <input type="submit" class="btn btn-default" value="Login">
+    </form>
+</div>
+
+<div class="login-msg">
     {{ msg }}
 </div>
 
