@@ -30,7 +30,6 @@ function refresh() {
                 features: {
                     pushState: false
                 }
-
             });
             table_refresh(data)
         }
@@ -166,10 +165,9 @@ function deleteSelected(ids) {
             url: url,
             dataType: "json",
             success: function (data) {
-                // Deleted
+                refresh()
             }
         })
-        refresh()
     }
 }
 
@@ -192,10 +190,9 @@ function addNewPostition() {
         dataType: "json",
         data: jsonObject,
         success: function (data) {
-            console.log("created")
+            refresh();
         }
     })
-    refresh()
 }
 
 function getInformationToEdtitionForm(id) {
@@ -212,6 +209,7 @@ function getInformationToEdtitionForm(id) {
             $("#editionSecondViewBy").val(data.secondViewBy);
             $("#editionFirstStageOpinion").val(data.firstStageOpinion);
             $("#editionAdditionalDescription").val(data.additionalDescription);
+            refresh();
         }
     })
 }
@@ -236,8 +234,7 @@ function confirmEdition(id) {
         dataType: "json",
         data: jsonObject,
         success: function (data) {
-            console.log("Edited")
+            refresh();
         }
     })
-    refresh();
 }
