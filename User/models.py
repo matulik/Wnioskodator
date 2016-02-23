@@ -2,10 +2,19 @@
 
 from django.db import models
 from hashlib import sha1
+from django.utils import timezone
+from datetime import datetime, timedelta
 
 # Session expiry time (in [ms])
 SESSION_EXPIRED_TIME = 30000
+# Token key
 TOKEN_KEY = u"DUPA"
+# Password expiry days
+PASSWORD_EXPIRED_DAYS = 30
+# Expired string
+GLOBAL_EXPIRED = u'Expired'
+# Password lenght
+PASSWORD_LENGTH = 6
 
 
 class User(models.Model):
@@ -17,6 +26,7 @@ class User(models.Model):
     # Access level - 0 - user, 1 - admin
     access_lvl = models.IntegerField(default=0, verbose_name=u'Access level')
     token = models.CharField(max_length=40, blank=True)
+    lastPasswordChanged = models.DateTimeField(blank=False, default=timezone.now, verbose_name=u'Data ostatniej zmiany hasła')
 
     @property
     def password(self):
@@ -25,6 +35,7 @@ class User(models.Model):
     @password.setter
     def password(self, newpassword):
         self._password = self.hashPassword(newpassword)
+        self.lastPasswordChanged = timezone.now()
 
     class Meta:
         db_table = 'USER'
@@ -62,6 +73,10 @@ class Login():
             request.session['login'] = True
             request.session['id'] = user.id
             request.session.set_expiry(SESSION_EXPIRED_TIME)
+            # Check password expiry
+            if Login.checkPasswordExpired(user):
+                return GLOBAL_EXPIRED
+
             print u'Login successfully'
             return True
         else:
@@ -80,7 +95,10 @@ class Login():
         if not request.session.get('login', None) or not request.session.get('id', None):
             return False
         if request.session['login'] == True and request.session['id'] != None:
-            return True
+            if Login.checkPasswordExpired(Login.getCurrentUser(request)):
+                return GLOBAL_EXPIRED
+            else:
+                return True
         else:
             return False
 
@@ -133,3 +151,14 @@ class Login():
             if user:
                 return True
         return False
+
+    @staticmethod
+    def checkPasswordExpired(user):
+        if user:
+            if timezone.now() - user.lastPasswordChanged > timedelta(days=PASSWORD_EXPIRED_DAYS):
+                print 'Expired'
+                return True
+            else:
+                return False
+        else:
+            return False

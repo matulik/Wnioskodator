@@ -32,9 +32,11 @@ urlpatterns = [
     url(r'^$', user_views.login),
     url(r'^login/$', user_views.login),
     url(r'^logout/$', user_views.logout),
+    url(r'^changepassword/$', user_views.changepassword),
 
     ### HOME URLS ###
     url(r'^home/$', home_views.home)
+
 
 
 
