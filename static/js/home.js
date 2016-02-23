@@ -99,12 +99,17 @@ function trmouseclick(i) {
 
     var creation = $("#creation-form").is(":visible")
     if (creation == true) {
-        return
+        return;
     }
 
     var edition = $("#edition-form").is(":visible")
     if (edition == true) {
+        var uid = return_checked();
+        getInformationToEdtitionForm(uid);
         removeHiglightFromChecked()
+        var row = $("tr").get(i.rowIndex);
+        row.className = "mouseover";
+        return;
     }
 
     if (deletion == false && creation == false && edition == false)
@@ -116,11 +121,6 @@ function trmouseclick(i) {
     else
         row.className = "mouseover";
     var ids = document.getElementsByClassName("mouseover");
-
-    if (edition == true) {
-        var uid = return_checked();
-        getInformationToEdtitionForm(uid);
-    }
 }
 
 function return_checked() {

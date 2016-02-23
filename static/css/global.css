@@ -36,7 +36,7 @@
 .home-left {
     text-align: center;
     background-color: cyan;
-    min-height: 200px;
+    min-height: 300px;
     min-width: 900px;
     padding: 10px 10px 10px 10px;
 }
@@ -45,10 +45,11 @@
     text-align: center;
     background-color: gray;
     min-height: 200px;
+    min-width: 180px;
     padding: 10px 10px 10px 10px;
 }
 
-#home-table-headers  {
+#home-table-headers {
     background-color: green;
     font-size: 10px;
     vertical-align: text-top;
@@ -60,15 +61,22 @@
 }
 
 #deletions {
+    min-width: 80px;
     width: 80%;
 }
 
 #edition {
+    min-width: 80px;
     width: 80%;
 }
 
 #creation {
+    min-width: 80px;
     width: 80%;
+}
+
+.home-form-button {
+
 }
 
 .home-form-button-highlited {
@@ -88,9 +96,18 @@
     margin-top: 10px;
     text-align: center;
     width: 80%;
-
 }
 
 .mouseover {
     background-color: gray;
+}
+
+.logout {
+    margin-top: 10px;
+}
+
+#user {
+    margin-top: 10px;
+    margin-bottom: 50px;
+    font-weight: bold;
 }

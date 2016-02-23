@@ -26,8 +26,8 @@
                 <thead id="home-table-headers">
                 <th data-dynatable-column="id" id="home-table-id">ID</th>
                 <th data-dynatable-column="applicationNumber">Numer wniosku</th>
+                <th data-dynatable-column="whoAddedString">Dodane przez</th>
                 <th data-dynatable-column="dateAdded">Data dodania</th>
-                <th data-dynatable-column="whoAdded">Dodane przez</th>
                 <th data-dynatable-column="dateLastEdited">Data ostatniej edycji</th>
                 <th data-dynatable-column="applicationOwner">Nazwa wnioskodawcy</th>
                 <th data-dynatable-column="applicationTitle">Tytuł projektu</th>
@@ -40,15 +40,31 @@
         </div>
 
         <div class="col-xs-2 home-right">
-            <button id="deletions" class="btn btn-default home-form-button">Usuwanie</button>
+            <div id="user">
+                {% if user.firstname == "" %}
+                    {{ user.username }}
+                {% else %}
+                    {{ user.firstname }} {{ user.surname }}
+                {% endif %}
+                <form action="/logout/" method="get">
+                    <button class="btn btn-default home-form-button logout">Wyloguj</button>
+                </form>
+            </div>
+
+            {% if user.access_lvl == 1 %}
+                <button id="deletions" class="btn btn-default home-form-button">Usuwanie</button>
+            {% endif %}
             <button id="edition" class="btn btn-default home-form-button">Edycja</button>
             <button id="creation" class="btn btn-default home-form-button">Nowy</button>
 
             <div id="actions-form">
+
                 <div id="deletions-form">
-                    <button id="button_delete" class="btn btn-default home-form-button" type="submit">Usuń zaznaczone
+                    <button id="button_delete" class="btn btn-default home-form-button" type="submit">Usuń
+                        zaznaczone
                     </button>
                 </div>
+
 
                 <div id="edition-form">
                     <form>

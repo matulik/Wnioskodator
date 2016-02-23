@@ -59,7 +59,7 @@ ROOT_URLCONF = 'Wnioskodator.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'Templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,12 +80,12 @@ WSGI_APPLICATION = 'Wnioskodator.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
+        # 'USER': '',
+        # 'PASSWORD': '',
+        # 'HOST': 'localhost',
+        # 'PORT': '3306',
     }
 }
 
@@ -106,11 +106,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-TEMPLATE_DIRS = (
-    '/home/matulik/subdomains/Wnioskodator/Templates',
-)
-
-STATIC_ROOT = '/home/matulik/subdomains/Wnioskodator/static'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [

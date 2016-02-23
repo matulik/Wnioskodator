@@ -14,7 +14,7 @@ def login(request):
 
             try:
                 user = User.objects.get(username=username)
-            except User.DoesNotExist:
+            except User.DoesNotExist or User.MultipleObjectsReturned:
                 msg = u'Błędna nazwa użytkownika lub hasła. Spróbuj ponownie.'
                 return render_to_response('User/login.html', { 'msg' : msg } , context_instance=RequestContext(request))
 

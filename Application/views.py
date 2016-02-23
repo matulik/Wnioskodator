@@ -68,8 +68,12 @@ def application_detail(request, pk):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         if request.method == 'DELETE':
-            ap.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            # If admin
+            if Login.getCurrentUser(request).access_lvl == 1:
+                ap.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            else:
+                Response(status=status.HTTP_401_UNAUTHORIZED)
 
         # If another is fail
         return Response(status=status.HTTP_400_BAD_REQUEST)

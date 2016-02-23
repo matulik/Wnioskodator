@@ -10,12 +10,21 @@ TOKEN_KEY = u"DUPA"
 
 class User(models.Model):
     username = models.CharField(max_length=50, blank=False, verbose_name=u'Login')
-    password = models.CharField(max_length=50, blank=False, verbose_name=u'Password')
+    _password = models.CharField(max_length=50, blank=False, verbose_name=u'Password', db_column='password')
     firstname = models.CharField(max_length=50, verbose_name=u'Name')
     surname = models.CharField(max_length=50, verbose_name=u'Surename')
     email = models.EmailField()
+    # Access level - 0 - user, 1 - admin
     access_lvl = models.IntegerField(default=0, verbose_name=u'Access level')
     token = models.CharField(max_length=40, blank=True)
+
+    @property
+    def password(self):
+        return self._password
+
+    @password.setter
+    def password(self, newpassword):
+        self._password = self.hashPassword(newpassword)
 
     class Meta:
         db_table = 'USER'
@@ -29,10 +38,14 @@ class User(models.Model):
         else:
             return False
 
-    def save(self, *args, **kwargs):
-        self.password = self.hashPassword(self.password)
-        self.token = Login.generateToken(self)
-        super(User, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     ### TODO!!!!! ###
+    #     self.password = self.hashPassword(self.password)
+    #     self.token = Login.generateToken(self)
+    #     super(User, self).save(*args, **kwargs)
+
+    def get_userstring(self):
+        return self.username
 
 
 class Login():
