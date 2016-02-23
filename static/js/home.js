@@ -104,23 +104,24 @@ function trmouseclick(i) {
 
     var edition = $("#edition-form").is(":visible")
     if (edition == true) {
-        var uid = return_checked();
-        getInformationToEdtitionForm(uid);
-        removeHiglightFromChecked()
+        removeHiglightFromChecked();
         var row = $("tr").get(i.rowIndex);
         row.className = "mouseover";
+        var uid = return_checked();
+        getInformationToEdtitionForm(uid);
         return;
     }
 
     if (deletion == false && creation == false && edition == false)
         return;
 
+    // For deletions - multiple selection
     var row = $("tr").get(i.rowIndex);
     if (row.className == "mouseover")
         row.className = "";
     else
         row.className = "mouseover";
-    var ids = document.getElementsByClassName("mouseover");
+    //var ids = document.getElementsByClassName("mouseover");
 }
 
 function return_checked() {
@@ -209,7 +210,7 @@ function getInformationToEdtitionForm(id) {
             $("#editionSecondViewBy").val(data.secondViewBy);
             $("#editionFirstStageOpinion").val(data.firstStageOpinion);
             $("#editionAdditionalDescription").val(data.additionalDescription);
-            refresh();
+            //refresh();
         }
     })
 }
